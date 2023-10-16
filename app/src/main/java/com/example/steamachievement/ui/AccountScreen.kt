@@ -1,5 +1,6 @@
 package com.example.steamachievement.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.steamachievement.R
 import com.example.steamachievement.util.database.readUserDataIntoDatabase
+import com.example.steamachievement.util.network.checkValidSteamIDAndAPIKey
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun AccountScreen(
@@ -92,12 +98,29 @@ fun AccountScreen(
                 Button(
                     shape = MaterialTheme.shapes.small,
                     onClick = {
-                        readUserDataIntoDatabase(
-                            context = context,
-                            SteamID = steamID,
-                            SteamAPIKey = steamAPIKey
-                        )
-                        navChangeConfirm()
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val valid = checkValidSteamIDAndAPIKey(steamID, steamAPIKey)
+
+                            if (valid) {
+                                readUserDataIntoDatabase(
+                                    context = context,
+                                    SteamID = steamID,
+                                    SteamAPIKey = steamAPIKey
+                                )
+
+                                withContext(Dispatchers.Main) {
+                                    navChangeConfirm()
+                                }
+                            } else {
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.invalid_id_api),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {

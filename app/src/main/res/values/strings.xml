@@ -16,7 +16,7 @@
     <string name="display_coveronly">Cover-Only Grid</string>
     <string name="toast_gameadded">Game Added</string>
     <string name="toast_nointernet">Internet Not Available</string>
-    <string name="placeholder_search">Search...</string>
+    <string name="placeholder_search">Search…</string>
     <string name="steamachievementmanager">Steam Achievement Manager</string>
     <string name="steamid">SteamID</string>
     <string name="steamapikey">Steam API Key</string>
@@ -49,4 +49,5 @@
     <string name="info_changeindividually">One can also change the achievements\' links individually.</string>
     <string name="info_reloadgameachievements">Reload Game + Achievements will delete the particular game and achievements info in the database and fetch it again from Valve\'s server.</string>
     <string name="account_warning">Clicking the Confirm button will consume a lot of data. Make sure you are connected to a wifi.</string>
+    <string name="invalid_id_api">Invalid SteamID and / or Steam API Key</string>
 </resources>

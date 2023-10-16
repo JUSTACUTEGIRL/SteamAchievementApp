@@ -72,6 +72,7 @@ fun AchievementWebScreen(url: String) {
                     }
                 }
                 settings.javaScriptEnabled = true
+                settings.builtInZoomControls = true
                 loadUrl(url)
             }
         }

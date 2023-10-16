@@ -11,6 +11,7 @@ fun GuideWebScreen(link: String) {
         WebView(it).apply {
             webViewClient = WebViewClient()
             settings.javaScriptEnabled = true
+            settings.builtInZoomControls = true
             loadUrl(link)
         }
     })
