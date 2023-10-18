@@ -1,5 +1,6 @@
 package com.example.steamachievement.ui.game
 
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ fun GuideWebScreen(link: String) {
             webViewClient = WebViewClient()
             settings.javaScriptEnabled = true
             settings.builtInZoomControls = true
+            settings.displayZoomControls = false
             loadUrl(link)
         }
     })

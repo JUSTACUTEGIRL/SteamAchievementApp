@@ -49,7 +49,7 @@ fun GameScreen(
 ) {
     val context = LocalContext.current
     val gameList = gameViewModel.games
-    val typeOfCard = gameViewModel.displayList
+    val typeOfCard = gameViewModel.display
     var isFilterShown by remember { mutableStateOf(false) }
     var isSearchShown by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -131,7 +131,7 @@ fun GameScreen(
                         items = gameList,
                         key = { it.appID }
                     ) { game ->
-                        if (typeOfCard[0]) {
+                        if (typeOfCard == 0) {
                             GameItemCompact(
                                 game = game,
                                 onClickGame = {
@@ -140,7 +140,7 @@ fun GameScreen(
                                 },
                                 modifier = Modifier.animateItemPlacement()
                             )
-                        } else if (typeOfCard[1]) {
+                        } else if (typeOfCard == 1) {
                             GameItemComfortable(
                                 game = game,
                                 onClickGame = {
@@ -149,7 +149,7 @@ fun GameScreen(
                                 },
                                 modifier = Modifier.animateItemPlacement()
                             )
-                        } else if (typeOfCard[2]) {
+                        } else if (typeOfCard == 2) {
                             GameItemCoverOnly(
                                 game = game,
                                 onClickGame = {

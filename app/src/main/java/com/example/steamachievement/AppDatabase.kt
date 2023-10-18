@@ -39,13 +39,13 @@ private const val SQL_CREATE_ACHIEVEMENT =
 private const val SQL_CREATE_PREFERENCES =
     "CREATE TABLE ${Database.Preferences.TABLE_NAME} (" +
             "${Database.Preferences.COLUMN_NAME_FIRST_TIME_START} INTEGER," +
-            "${Database.Preferences.COLUMN_NAME_FILTER} INTEGER," +
-            "${Database.Preferences.COLUMN_NAME_SORT} INTEGER," +
+            "${Database.Preferences.COLUMN_NAME_FILTER} TEXT," +
+            "${Database.Preferences.COLUMN_NAME_SORT} TEXT," +
             "${Database.Preferences.COLUMN_NAME_DISPLAY} INTEGER);"
 
 private const val SQL_ADD_PREFERENCES =
     "INSERT INTO ${Database.Preferences.TABLE_NAME} " +
-            "VALUES (1, 0, 0, 0);"
+            "VALUES (1, '0000', '10', 0);"
 
 private const val SQL_DELETE_USERDATA =
     "DROP TABLE IF EXISTS ${Database.UserData.TABLE_NAME}"

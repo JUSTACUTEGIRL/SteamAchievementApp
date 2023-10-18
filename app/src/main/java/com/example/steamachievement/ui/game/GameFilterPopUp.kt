@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -161,7 +162,7 @@ private fun MenuHeader(
                 contentColor = if (currentVisibleItem == 2) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
             ),
         ) {
-            Text(stringResource(id = R.string.sort))
+            Text(stringResource(id = R.string.display))
         }
     }
 }
@@ -170,26 +171,27 @@ private fun MenuHeader(
 private fun FilterBody(
     gameViewModel: GameViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val checkboxStateList = gameViewModel.filterList
+    val checkboxStateList = gameViewModel.filter
 
     Column(
         modifier = Modifier.width(screenWidth)
     ) {
         FilterItem(
             text = stringResource(id = R.string.filter_completed),
-            iconState = checkboxStateList[0],
-            onClick = { gameViewModel.changeFilter(0) }
+            iconState = checkboxStateList[0].toInt(),
+            onClick = { gameViewModel.changeFilter(0, context) }
         )
         FilterItem(
             text = stringResource(id = R.string.filter_started),
-            iconState = checkboxStateList[1],
-            onClick = { gameViewModel.changeFilter(1) }
+            iconState = checkboxStateList[1].toInt(),
+            onClick = { gameViewModel.changeFilter(1, context) }
         )
         FilterItem(
             text = stringResource(id = R.string.filter_hasachievement),
-            iconState = checkboxStateList[2],
-            onClick = { gameViewModel.changeFilter(2) }
+            iconState = checkboxStateList[2].toInt(),
+            onClick = { gameViewModel.changeFilter(2, context) }
         )
     }
 }
@@ -198,21 +200,22 @@ private fun FilterBody(
 private fun SortBody(
     gameViewModel: GameViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val iconStateList = gameViewModel.sortList
+    val iconStateList = gameViewModel.sort
 
     Column(
         modifier = Modifier.width(screenWidth)
     ) {
         SortItem(
             text = stringResource(id = R.string.sort_alphabetically),
-            iconState = iconStateList[0],
-            onClick = { gameViewModel.changeSort(0) }
+            iconState = iconStateList[0].toInt(),
+            onClick = { gameViewModel.changeSort(0, context) }
         )
         SortItem(
             text = stringResource(id = R.string.sort_complepercent),
-            iconState = iconStateList[2],
-            onClick = { gameViewModel.changeSort(2) }
+            iconState = iconStateList[1].toInt(),
+            onClick = { gameViewModel.changeSort(1, context) }
         )
     }
 }
@@ -221,24 +224,25 @@ private fun SortBody(
 private fun DisplayBody(
     gameViewModel: GameViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val radioButtonStateList = gameViewModel.displayList
+    val display = gameViewModel.display
 
     Column(
         modifier = Modifier.width(screenWidth)
     ) {
         DisplayItem(
             text = stringResource(id = R.string.display_compact),
-            radioButtonState = radioButtonStateList[0],
-            onClick = { gameViewModel.selectDisplay(0) })
+            radioButtonState = display == 0,
+            onClick = { gameViewModel.selectDisplay(0, context) })
         DisplayItem(
             text = stringResource(id = R.string.display_comfort),
-            radioButtonState = radioButtonStateList[1],
-            onClick = { gameViewModel.selectDisplay(1) })
+            radioButtonState = display == 1,
+            onClick = { gameViewModel.selectDisplay(1, context) })
         DisplayItem(
             text = stringResource(id = R.string.display_coveronly),
-            radioButtonState = radioButtonStateList[2],
-            onClick = { gameViewModel.selectDisplay(2) })
+            radioButtonState = display == 2,
+            onClick = { gameViewModel.selectDisplay(2, context) })
     }
 }
 
@@ -255,10 +259,11 @@ fun FilterItem(
     ) {
         AnimatedContent(
             targetState = iconState,
-            transitionSpec = { fadeIn() with fadeOut() }
+            transitionSpec = { fadeIn() with fadeOut() },
+            label = ""
         ) {
             Icon(
-                painter = when (iconState) {
+                painter = when (it) {
                     0 -> painterResource(R.drawable.round_check_box_outline_blank_24)
                     1 -> painterResource(R.drawable.baseline_check_box_24)
                     2 -> painterResource(R.drawable.close_square_filled)
@@ -284,10 +289,11 @@ fun SortItem(
     ) {
         AnimatedContent(
             targetState = iconState,
-            transitionSpec = { fadeIn() with fadeOut() }
+            transitionSpec = { fadeIn() with fadeOut() },
+            label = ""
         ) {
             Icon(
-                painter = when (iconState) {
+                painter = when (it) {
                     0 -> painterResource(R.drawable.empty_icon)
                     1 -> painterResource(R.drawable.baseline_arrow_downward_24)
                     2 -> painterResource(R.drawable.baseline_arrow_upward_24)
