@@ -63,7 +63,7 @@ fun GameItemCompact(
             GameImage(appID = game.appID)
             Box(modifier = Modifier
                 .matchParentSize()
-                .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.75f)), 1000.0f))
+                .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.5f)), 375.0f))
             )
 
             Column(
@@ -79,8 +79,8 @@ fun GameItemCompact(
                     color = Color.White,
                     modifier = Modifier.padding(7.dp),
                     style = TextStyle(
-                        fontSize = 30.sp,
-                        shadow = Shadow(color = Color.Black, offset = Offset(0f, 0f), blurRadius = 15f)
+                        fontSize = 14.sp,
+                        shadow = Shadow(color = Color.Black, offset = Offset(0f, 0f), blurRadius = 8f)
                     ),
                 )
             }

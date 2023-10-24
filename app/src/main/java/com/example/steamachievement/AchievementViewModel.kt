@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.steamachievement.util.calculatePercentageGameCompletion
@@ -85,8 +86,8 @@ class AchievementViewModel: ViewModel() {
             if (!isNetworkAvailable(context)) {
                 _achievementsOriginal.add(
                     Achievement(
-                        displayName = "No Internet",
-                        description = "This game achievements are not loaded and need internet connection to load"
+                        displayName = context.getString(R.string.no_internet),
+                        description = context.getString(R.string.no_internet_description)
                     )
                 )
                 _achievements.addAll(_achievementsOriginal)
@@ -97,8 +98,8 @@ class AchievementViewModel: ViewModel() {
                 if (game.achievements.isEmpty()) {
                     _achievementsOriginal.add(
                         Achievement(
-                            displayName = "No Achievement",
-                            description = "This game has no achievement"
+                            displayName = context.getString(R.string.no_achievement),
+                            description = context.getString(R.string.no_achievement_description)
                         )
                     )
                     _achievements.addAll(_achievementsOriginal)
